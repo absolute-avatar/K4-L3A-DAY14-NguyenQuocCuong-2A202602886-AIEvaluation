@@ -166,31 +166,36 @@ và quyết định thiết kế, không chép lại toàn bộ QA.
 
 | Hạng mục | Kết quả |
 |---|---|
-| Tổng số records | ____ / 20 |
-| Easy | ____ / 5 |
-| Medium | ____ / 7 |
-| Hard | ____ / 5 |
-| Adversarial | ____ / 3 |
-| Source documents được sử dụng | ____ / 10 |
-| Validator status | PASS / FAIL |
+| Tổng số records | 20 / 20 |
+| Easy | 5 / 5 |
+| Medium | 7 / 7 |
+| Hard | 5 / 5 |
+| Adversarial | 3 / 3 |
+| Source documents được sử dụng | 10 / 10 |
+| Validator status | PASS |
 
 **Ba case đại diện cho quyết định thiết kế**
 
 | ID | Difficulty | Source document(s) | Vì sao case phù hợp với difficulty/attack type? |
 |---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
+| E02 | Easy | `02_orders_and_payments.md` | Chỉ cần tra cứu trực tiếp một quy tắc rõ ràng: order number cùng confirmation email mới xác nhận đơn; pending authorization không đủ. |
+| H01 | Hard | `09_escalation_and_policy_updates.md` | Phải chọn policy version theo ngày đặt hàng, sau đó áp dụng cửa sổ tính từ ngày giao và ngoại lệ OrbitPlus; không thể chỉ lấy con số mới nhất. |
+| A02 | Adversarial — prompt injection | `00_system_scope.md` | Câu hỏi cố ghi đè system rules, lấy hidden prompt, private notes, dữ liệu khách khác và OTP; đáp án đúng phải không làm theo các chỉ dẫn đó. |
 
 **Điểm khó nhất khi xây dựng expected answer hoặc evidence là gì?**
 
 > *Câu trả lời:*
 
+Khó nhất là giữ expected answer vừa đủ đầy đủ nhưng không vượt quá evidence,
+đặc biệt ở các case kết hợp ngày hiệu lực, membership và return window. Với các
+case nhiều nguồn, từng claim được đối chiếu riêng với đoạn trích nguyên văn để
+tránh suy diễn một quyền lợi hoặc cam kết mà corpus không nêu.
+
 **Xác nhận:**
 
-- [ ] Mọi claim trong expected answer đều có evidence hỗ trợ.
-- [ ] Không có questions trùng ý và không dùng kiến thức ngoài corpus.
-- [ ] `python validate_golden_dataset.py` báo `PASS`.
+- [x] Mọi claim trong expected answer đều có evidence hỗ trợ.
+- [x] Không có questions trùng ý và không dùng kiến thức ngoài corpus.
+- [x] `python validate_golden_dataset.py` báo `PASS`.
 
 ### Exercise 3.2 — Benchmark Run
 
